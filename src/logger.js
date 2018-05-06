@@ -14,33 +14,33 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as async from "async";
-import { IConfigurationFile } from "../../config/config";
-import { logger } from "../../src/logger";
-import PatchServer from "./patchServer";
-import WebServer from "./web";
+const config = require ('dotenv');
+const winston = require ('winston');
 
-export default class Web {
+const logger = new winston.Logger ({
+  // tslint:disable-next-line:no-bitwise
+  level: 'debug',
+  transports: [
+    new winston.transports.File ({
+      filename: 'filelog-info.log',
+      level: 'info',
+      name: 'info-file',
+    }),
+    new winston.transports.File ({
+      filename: 'filelog-error.log',
+      level: 'error',
+      name: 'error-file',
+    }),
+    new winston.transports.Console (),
+  ],
+});
 
-  /**
-   * Start HTTP and HTTPs connection listeners
-   * TODO: This code may be better suited in web.js and patchServer.js
-   */
-  public async start(config: IConfigurationFile) {
-    /* Start the NPS servers */
-
-
-    const patchServer = new PatchServer
-    const webServer = new WebServer
-
-    patchServer.start(config)
-    webServer.start()
-
-
-    logger.info("Patch Server started");
-    logger.info("Web Server started");
-
-  }
+//
+// If we're not in production then log to the `console` with the format:
+// `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
+//
+if (process.env.NODE_ENV !== 'production') {
+  logger.cli ();
 }
 
-
+module.exports = logger;

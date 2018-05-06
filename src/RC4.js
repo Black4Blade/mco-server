@@ -1,16 +1,10 @@
-export class RC4 {
-  private mState;
-  private mX;
-  private mY;
-  private keyBytes;
-  private keyLen;
-
-  constructor(key) {
-    const keyBytes = Buffer.from(key, "utf8");
+class RC4 {
+  constructor (key) {
+    const keyBytes = Buffer.from (key, 'utf8');
     this.keyBytes = keyBytes;
     const keyLength = keyBytes.length;
     this.keyLen = keyLength;
-    this.mState = Array(256);
+    this.mState = Array (256);
     this.mX = 0;
     this.mY = 0;
 
@@ -23,31 +17,31 @@ export class RC4 {
 
     for (let counter = 0; counter < 256; counter++) {
       j = (j + this.mState[counter] + keyBytes[index1++]) % 256;
-      this.swapByte(counter, j);
+      this.swapByte (counter, j);
       if (index1 >= keyLength) {
         index1 = 0;
       }
     }
   }
 
-  public getKey() {
+  getKey () {
     return this.keyBytes;
   }
 
-  public getKeyLen() {
+  getKeyLen () {
     return this.keyLen;
   }
 
-  public getSBox() {
+  getSBox () {
     return this.mState;
   }
 
-  public processString(inString) {
-    const inBytes = Buffer.from(inString);
+  processString (inString) {
+    const inBytes = Buffer.from (inString);
     let idx1 = 0;
     let idx2 = 0;
     let strLength = inBytes.length;
-    const output = Buffer.alloc(strLength);
+    const output = Buffer.alloc (strLength);
     const s = this.mState;
     let x = this.mX;
     let y = this.mY;
@@ -70,9 +64,11 @@ export class RC4 {
     this.mY = y;
     return output;
   }
-  private swapByte(b1, b2) {
+  swapByte (b1, b2) {
     const t1 = this.mState[b1];
     this.mState[b1] = this.mState[b2];
     this.mState[b2] = t1;
   }
 }
+
+module.exports = {RC4};

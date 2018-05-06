@@ -14,15 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-export function buildPacket(len: number, header: number, content: Buffer) {
+function buildPacket (len, header, content) {
   // TODO: Confirm that len is equal to the content len
-  const packet = Buffer.alloc(len);
+  const packet = Buffer.alloc (len);
 
   // Add the response code
-  packet.writeUInt16BE(header, 0);
+  packet.writeUInt16BE (header, 0);
 
   // Write the content
-  content.copy(packet, 2);
+  content.copy (packet, 2);
 
   return packet;
 }
@@ -31,8 +31,8 @@ export function buildPacket(len: number, header: number, content: Buffer) {
  * This is the response packet sent on the login port in response to a UserLogin
  * TODO: Replace the need for this
  */
-export function premadeLogin() {
-  return Buffer.from([
+function premadeLogin () {
+  return Buffer.from ([
     // Live Packet
     0x06, // +0
     0x01,
@@ -293,8 +293,8 @@ export function premadeLogin() {
   ]);
 }
 
-export function craftGenericReply() {
-  const packet = Buffer.from([
+function craftGenericReply () {
+  const packet = Buffer.from ([
     0x31,
     0x00,
     0x54,
@@ -328,8 +328,8 @@ export function craftGenericReply() {
 }
 
 // TODO: Remove the need for this
-export function premadePersonaMaps() {
-  return Buffer.from([
+function premadePersonaMaps () {
+  return Buffer.from ([
     // Live
     0x06,
     0x07,
@@ -1357,3 +1357,10 @@ export function premadePersonaMaps() {
     0x08,
   ]);
 }
+
+module.exports = {
+  buildPacket,
+  craftGenericReply,
+  premadeLogin,
+  premadePersonaMaps,
+};

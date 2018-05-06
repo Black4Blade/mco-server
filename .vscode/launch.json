@@ -8,8 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "preLaunchTask": "build",
-      "program": "${workspaceFolder}/dist/src/server.js"
+      "program": "${workspaceFolder}/server.js"
     }
   ]
 }
