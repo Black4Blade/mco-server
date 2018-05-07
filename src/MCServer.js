@@ -58,10 +58,14 @@ function startServers (configurationFile) {
       9014,
     ];
 
-    Web.start (configurationFile).then (() => {
-      tcpPortList.map (port => startTCPListener (port, connectionMgr));
-      logger.info ('Listening sockets create successfully.');
-    });
+    // Web.start (configurationFile).then (() => {
+    //   tcpPortList.map (port => startTCPListener (port, connectionMgr));
+    //   logger.info ('Listening sockets create successfully.');
+    // });
+
+    tcpPortList.map (port => startTCPListener (port, connectionMgr));
+    logger.info ('Listening sockets create successfully.');
+
     resolve ();
   });
 }

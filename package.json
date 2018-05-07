@@ -7,6 +7,8 @@
     "dev": "npm install && npm run tslint && npm build -w",
     "build": "npm run build-ts && npm run tslint",
     "start": "node server.js",
+    "start:servers":
+      "concurrently 'sudo ruby server.rb' 'sudo ruby server_ssl.rb'",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "pretest": "npm run eslint",
     "test": "npm run build && jest --all",
@@ -26,14 +28,9 @@
   "jest": {
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.js",
-      "lib/**/*.js"
-    ],
+    "collectCoverageFrom": ["src/**/*.js", "lib/**/*.js"],
     "testResultsProcessor": "jest-junit",
-    "moduleFileExtensions": [
-      "js"
-    ],
+    "moduleFileExtensions": ["js"],
     "testRegex": ".*(spec|test).(ts|tsx|js)$"
   },
   "jest-junit": {
@@ -42,6 +39,7 @@
   "dependencies": {
     "arc4": "^3.4.0",
     "async": "^2.5.0",
+    "concurrently": "^3.5.1",
     "dotenv": "^5.0.0",
     "require-environment-variables": "^1.1.2",
     "sqlite": "^2.9.1",
